@@ -11,16 +11,21 @@ class MyTestCase(test.CementTestCase):
     def setUp(self):
         super(MyTestCase, self).setUp()
         self.reset_backend()
+
         self.app = Ipto(argv=self.default_argv, config_files=[])
         self.app._meta.exit_on_close = False
+
         self.app.setup()
 
     def tearDown(self):
         pass
 
-    def test_calls_start_tor(self):
-        with patch("ipto.common.tor.connect") as c:
+    def test_calls_tor_connect(self):
+        with patch("ipto.common.tor.conn") as c:
             self.app.run()
             assert c.called
         self.app.close()
+
+    def test_tor_connect(self):
+        assert False
 
